@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"/><title>OTA Helper</title></head>
+<body>
+<h2>OTA Helper</h2>
+<p>Enter target device IP (on same network) and a firmware URL to instruct the device to download & flash the binary.</p>
+
+<label>Device IP: <input id="ip" placeholder="192.168.1.45"/></label><br/>
+<label>Firmware URL: <input id="url" size="80" placeholder="https://.../fw1.bin"/></label><br/>
+<button id="go">Send OTA command</button>
+
+<pre id="out"></pre>
+<script>
+document.getElementById('go').addEventListener('click', async ()=>{
+  const ip = document.getElementById('ip').value.trim();
+  const url = document.getElementById('url').value.trim();
+  const out = document.getElementById('out');
+  if(!ip || !url){ out.textContent='enter both'; return; }
+  try {
+    const res = await fetch(`http://${ip}/api/ota`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ url })
+    });
+    const t = await res.text();
+    out.textContent = 'Response: '+t;
+  }catch(e){ out.textContent = 'Error: '+e; }
+});
+</script>
+</body>
+</html>

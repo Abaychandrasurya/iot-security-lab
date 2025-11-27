@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"/><title>Web Serial Monitor</title></head>
+<body>
+<h2>Web Serial Monitor</h2>
+<p>Connect the ESP32 via USB, press <b>Open Serial</b>, then click <b>Start</b>.</p>
+<button id="open">Open Serial</button>
+<button id="start" disabled>Start</button>
+<button id="close" disabled>Close</button>
+<pre id="output" style="height:400px;overflow:auto;background:#111;color:#0f0;padding:12px"></pre>
+
+<script>
+let port, reader, inputDone;
+const textDecoder = new TextDecoderStream();
+const el = document.getElementById('output');
+
+document.getElementById('open').addEventListener('click', async ()=>{
+  try{
+    port = await navigator.serial.requestPort();
+    await port.open({ baudRate: 115200 });
+    el.textContent += 'Opened port\\n';
+    document.getElementById('start').disabled = false;
+  }catch(e){ el.textContent += 'Open error: '+e+'\\n'; }
+});
+
+document.getElementById('start').addEventListener('click', async ()=>{
+  try{
+    const readableStreamClosed = port.readable.pipeTo(textDecoder.writable);
+    reader = textDecoder.readable.getReader();
+    document.getElementById('start').disabled = true;
+    document.getElementById('close').disabled = false;
+    while(true){
+      const {value, done} = await reader.read();
+      if(done) break;
+      el.textContent += value;
+      el.scrollTop = el.scrollHeight;
+    }
+  }catch(e){ el.textContent += 'Read error: '+e+'\\n'; }
+});
+
+document.getElementById('close').addEventListener('click', async ()=>{
+  if(reader){ await reader.cancel(); reader.releaseLock(); }
+  if(port){ await port.close(); el.textContent += 'Port closed\\n'; }
+  document.getElementById('start').disabled = false;
+  document.getElementById('close').disabled = true;
+});
+</script>
+</body>
+</html>

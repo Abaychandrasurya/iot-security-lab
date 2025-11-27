@@ -1,0 +1,113 @@
+name: Build 10 Firmwares (PlatformIO)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-all:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python (required by PlatformIO)
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install PlatformIO
+        run: |
+          python -m pip install -U pip
+          pip install -U platformio
+
+      - name: Build FW1
+        run: |
+          pio run -e fw1
+      - name: Upload fw1.bin artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fw1-bin
+          path: .pio/build/fw1/firmware.bin
+
+      - name: Build FW2
+        run: |
+          pio run -e fw2
+      - name: Upload fw2.bin artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fw2-bin
+          path: .pio/build/fw2/firmware.bin
+
+      - name: Build FW3
+        run: |
+          pio run -e fw3
+      - name: Upload fw3.bin artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fw3-bin
+          path: .pio/build/fw3/firmware.bin
+
+      - name: Build FW4
+        run: |
+          pio run -e fw4
+      - name: Upload fw4.bin artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fw4-bin
+          path: .pio/build/fw4/firmware.bin
+
+      - name: Build FW5
+        run: |
+          pio run -e fw5
+      - name: Upload fw5.bin artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fw5-bin
+          path: .pio/build/fw5/firmware.bin
+
+      - name: Build FW6
+        run: |
+          pio run -e fw6
+      - name: Upload fw6.bin artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fw6-bin
+          path: .pio/build/fw6/firmware.bin
+
+      - name: Build FW7
+        run: |
+          pio run -e fw7
+      - name: Upload fw7.bin artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fw7-bin
+          path: .pio/build/fw7/firmware.bin
+
+      - name: Build FW8
+        run: |
+          pio run -e fw8
+      - name: Upload fw8.bin artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fw8-bin
+          path: .pio/build/fw8/firmware.bin
+
+      - name: Build FW9
+        run: |
+          pio run -e fw9
+      - name: Upload fw9.bin artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fw9-bin
+          path: .pio/build/fw9/firmware.bin
+
+      - name: Build FW10
+        run: |
+          pio run -e fw10
+      - name: Upload fw10.bin artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fw10-bin
+          path: .pio/build/fw10/firmware.bin

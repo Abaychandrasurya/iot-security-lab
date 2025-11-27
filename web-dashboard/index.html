@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>IoT Security Lab — Firmware Portal</title>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<header>
+  <h1>IoT Security Lab — Firmware Portal</h1>
+  <p>Choose a firmware for your ESP32 device (FW1..FW10). Binaries are built automatically by GitHub Actions.</p>
+</header>
+
+<section id="firmware-list">
+  <table>
+    <thead><tr><th>Firmware</th><th>Summary</th><th>Download / OTA URL</th></tr></thead>
+    <tbody>
+      <!-- The URLs below assume you host build artifacts at GitHub Actions or Releases.
+           Replace <ARTIFACT_BASE_URL> with actual path or link from GitHub Actions once available. -->
+      <tr>
+        <td>FW1 — Insecure MQTT + Weak WiFi</td>
+        <td>Plaintext MQTT, anonymous login, SD plaintext</td>
+        <td><a id="fw1-link" href="firmware/fw1.bin" download>Download fw1.bin</a></td>
+      </tr>
+      <tr>
+        <td>FW2 — RF Replay + SD tamper</td>
+        <td>Plain nRF24 payloads, no seq, SD plaintext</td>
+        <td><a id="fw2-link" href="firmware/fw2.bin" download>Download fw2.bin</a></td>
+      </tr>
+      <tr>
+        <td>FW3 — OTA Unauthenticated</td>
+        <td>HTTP OTA, no signature</td>
+        <td><a id="fw3-link" href="firmware/fw3.bin" download>Download fw3.bin</a></td>
+      </tr>
+      <tr>
+        <td>FW4 — MQTT anonymous / token leakage</td>
+        <td>MQTT anon + token plaintext</td>
+        <td><a id="fw4-link" href="firmware/fw4.bin" download>Download fw4.bin</a></td>
+      </tr>
+      <tr>
+        <td>FW5 — Hardcoded credentials</td>
+        <td>Hardcoded WiFi/MQTT/app creds</td>
+        <td><a id="fw5-link" href="firmware/fw5.bin" download>Download fw5.bin</a></td>
+      </tr>
+      <tr>
+        <td>FW6 — Weak crypto</td>
+        <td>XOR/weak PRNG/predictable keys</td>
+        <td><a id="fw6-link" href="firmware/fw6.bin" download>Download fw6.bin</a></td>
+      </tr>
+      <tr>
+        <td>FW7 — Insecure OTA + Upload UI</td>
+        <td>HTTP OTA + no signature + web upload</td>
+        <td><a id="fw7-link" href="firmware/fw7.bin" download>Download fw7.bin</a></td>
+      </tr>
+      <tr>
+        <td>FW8 — Debug leaks</td>
+        <td>Verbose logs printed & published</td>
+        <td><a id="fw8-link" href="firmware/fw8.bin" download>Download fw8.bin</a></td>
+      </tr>
+      <tr>
+        <td>FW9 — DoS vulnerable</td>
+        <td>No rate limiting; RF flood possible</td>
+        <td><a id="fw9-link" href="firmware/fw9.bin" download>Download fw9.bin</a></td>
+      </tr>
+      <tr>
+        <td>FW10 — Mixed (final red-team)</td>
+        <td>Combined stack = open WiFi + RF plaintext + OTA insecure + SD plaintext</td>
+        <td><a id="fw10-link" href="firmware/fw10.bin" download>Download fw10.bin</a></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="tools">
+  <h2>Tools & links</h2>
+  <ul>
+    <li><a href="serial.html" target="_blank">Open browser Serial Monitor (Web Serial API)</a></li>
+    <li><a href="ota.html" target="_blank">Manual OTA helper</a></li>
+    <li><a href="docs/index.html" target="_blank">Lab documentation</a> (if present)</li>
+  </ul>
+</section>
+
+<footer>
+  <small>Hosted from GitHub + Netlify. Binaries are built with GitHub Actions.</small>
+</footer>
+</body>
+</html>

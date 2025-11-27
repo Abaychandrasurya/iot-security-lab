@@ -8,7 +8,6 @@ nRF24L01 on SPI
 SD on SPI CS pin
 */
 
-
 #include <Arduino.h>
 #include <WiFi.h>
 #include <AsyncTCP.h>
